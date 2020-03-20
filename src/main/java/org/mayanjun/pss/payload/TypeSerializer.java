@@ -21,10 +21,13 @@ import org.mayanjun.pss.SerializeException;
 
 import java.nio.ByteBuffer;
 
+/**
+ * Serialize/Deserialize object
+ */
 interface TypeSerializer {
 
     /**
-     * 将一个对象序列化为数组
+     * Convert the value to bytes
      * @param value
      * @return
      * @throws SerializeException
@@ -32,7 +35,7 @@ interface TypeSerializer {
     byte[] serialize(Object value) throws SerializeException;
 
     /**
-     * 反序列换一个字段为对象
+     * Deserialize the buffer to Object. Such as {@linkplain Payload}
      * @param buffer
      * @return
      * @throws DeserializeException

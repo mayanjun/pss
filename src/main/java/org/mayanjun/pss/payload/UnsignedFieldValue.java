@@ -16,29 +16,13 @@
 
 package org.mayanjun.pss.payload;
 
-public class DataField {
+public class UnsignedFieldValue extends FieldValue {
 
-    private FieldDescriptor fieldDescriptor;
-    private Object value;
-
-    public DataField(FieldDescriptor fieldDescriptor, Object value) {
-        this.fieldDescriptor = fieldDescriptor;
-        this.value = value;
+    public UnsignedFieldValue(FieldDescriptor fieldDescriptor, Object value) {
+        super(fieldDescriptor, value);
     }
 
-    public FieldDescriptor getFieldDescriptor() {
-        return fieldDescriptor;
-    }
-
-    public void setFieldDescriptor(FieldDescriptor fieldDescriptor) {
-        this.fieldDescriptor = fieldDescriptor;
-    }
-
-    public Object getValue() {
-        return value;
-    }
-
-    public void setValue(Object value) {
-        this.value = value;
+    public Object getUnsignedValue() {
+        return getFieldDescriptor().getType().unsignedValue(getValue());
     }
 }

@@ -22,19 +22,22 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Represent  a payload
+ */
 public class Payload {
 
     private int descriptorId;
 
-    private Map<String, DataField> dataFieldMap = new LinkedHashMap<String, DataField>();
+    private Map<String, FieldValue> dataFieldMap = new LinkedHashMap<String, FieldValue>();
 
     public Payload(int descriptorId) {
         this.descriptorId = descriptorId;
     }
 
-    public Payload addDataField(DataField dataField) {
-        if (dataField != null) {
-            dataFieldMap.put(dataField.getFieldDescriptor().getName(), dataField);
+    public Payload addDataField(FieldValue fieldValue) {
+        if (fieldValue != null) {
+            dataFieldMap.put(fieldValue.getFieldDescriptor().getName(), fieldValue);
         }
         return this;
     }
@@ -43,7 +46,7 @@ public class Payload {
         return descriptorId;
     }
 
-    public Map<String, DataField> getDataFieldMap() {
+    public Map<String, FieldValue> getDataFieldMap() {
         return dataFieldMap;
     }
 
@@ -59,10 +62,10 @@ public class Payload {
     private String dataFieldMapToString() {
         if (dataFieldMap == null) return null;
         if (dataFieldMap.isEmpty()) return "{}";
-        Set<Map.Entry<String, DataField>> set = dataFieldMap.entrySet();
+        Set<Map.Entry<String, FieldValue>> set = dataFieldMap.entrySet();
         StringBuilder sb = new StringBuilder();
-        for (Map.Entry<String, DataField> ent : set) {
-            DataField f = ent.getValue();
+        for (Map.Entry<String, FieldValue> ent : set) {
+            FieldValue f = ent.getValue();
             Object value = f.getValue();
             sb.append("\t\t").append(ent.getKey()).append(": ")
                     .append("type=").append(f.getFieldDescriptor().getType());
@@ -77,9 +80,9 @@ public class Payload {
 
             sb.append("(").append(f.getValue().getClass().getSimpleName()).append(")");
 
-            if (f instanceof UnsignedDataField) {
-                Object uv = ((UnsignedDataField) f).getUnsignedValue();
-                sb.append(f instanceof UnsignedDataField ? ", unsignedValue=" + uv : "")
+            if (f instanceof UnsignedFieldValue) {
+                Object uv = ((UnsignedFieldValue) f).getUnsignedValue();
+                sb.append(f instanceof UnsignedFieldValue ? ", unsignedValue=" + uv : "")
                         .append("(").append(uv.getClass().getSimpleName()).append(")");
             }
             sb.append("\n");

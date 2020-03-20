@@ -53,7 +53,7 @@ public class Demo {
         data.put("age", 17);
         data.put("uage", 222);
         data.put("ok", true);
-        data.put("name", "mayanjun马彦军");
+        data.put("name", "mayanjun中国万岁");
         data.put("height", 564.3374);
         data.put("score", 22.4321);
         data.put("length", 2345);

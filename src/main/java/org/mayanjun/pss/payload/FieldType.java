@@ -25,6 +25,9 @@ import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.util.Date;
 
+/**
+ * Define the primary types in language C or C++ and handlers to serialize/deserialize the value.
+ */
 public enum FieldType implements TypeSerializer {
 
     INT8(1, false, new TypeSerializer() {
@@ -239,7 +242,7 @@ public enum FieldType implements TypeSerializer {
     BYTES(-1, false, new TypeSerializer() {
         @Override
         public byte[] serialize(Object value) throws SerializeException {
-            return SerializeUtils.bytesToBytes(value);
+            return SerializeUtils.bytesToLengthBytes(value);
         }
 
         @Override

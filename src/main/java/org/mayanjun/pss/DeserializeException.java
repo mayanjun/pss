@@ -17,7 +17,7 @@
 package org.mayanjun.pss;
 
 /**
- * 序列化异常
+ * Deserialization exception
  */
 public class DeserializeException extends Exception {
 

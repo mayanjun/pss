@@ -20,6 +20,9 @@ package org.mayanjun.pss.payload;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * PayloadDescriptor representing description of an object
+ */
 public class PayloadDescriptor {
 
     /**

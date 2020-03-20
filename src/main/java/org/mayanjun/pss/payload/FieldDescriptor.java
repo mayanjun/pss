@@ -16,6 +16,9 @@
 
 package org.mayanjun.pss.payload;
 
+/**
+ * Describe a field
+ */
 public class FieldDescriptor {
 
     // 字段的英文名称

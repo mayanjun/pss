@@ -17,7 +17,7 @@
 package org.mayanjun.pss.util;
 
 /**
- * 二进制转换工具
+ * Binary utils
  * @author mayanjun
  * @since 2018/7/25
  */

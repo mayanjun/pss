@@ -21,6 +21,9 @@ import org.mayanjun.pss.SerializeException;
 import java.nio.ByteBuffer;
 import java.util.Date;
 
+/**
+ * Serialization utils
+ */
 public class SerializeUtils {
 
     private static final byte [] TRUE_BYTES = new byte []{1};
@@ -167,7 +170,7 @@ public class SerializeUtils {
      * @return
      * @throws SerializeException
      */
-    public static byte[] bytesToBytes(Object value) throws SerializeException {
+    public static byte[] bytesToLengthBytes(Object value) throws SerializeException {
         if (value == null) return toLengthBytes(null);
         if (value instanceof byte[]) {
             byte bs[] = (byte[]) value;

@@ -82,9 +82,9 @@ public class Payloads {
                 FieldType type = field.getType();
                 Object value = type.deserialize(buffer);
                 if (type.isUnsigned()) {
-                    pl.addDataField(new UnsignedDataField(field, value));
+                    pl.addDataField(new UnsignedFieldValue(field, value));
                 } else {
-                    pl.addDataField(new DataField(field, value));
+                    pl.addDataField(new FieldValue(field, value));
                 }
             }
             return pl;
