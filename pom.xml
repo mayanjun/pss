@@ -9,8 +9,8 @@
     <version>1.0-ALPHA</version>
 
     <name>Payload Serialization System</name>
-    <description>mybatisx library</description>
-    <url>https://github.com/mayanjun/mybatisx</url>
+    <description>Payload Serialization System</description>
+    <url>https://github.com/mayanjun/pss</url>
 
     <licenses>
         <license>
@@ -28,20 +28,18 @@
     </developers>
 
     <scm>
-        <url>http://mayanjun.org</url>
-        <connection>https://github.com/mayanjun/mybatisx.git</connection>
+        <url>https://mayanjun.org</url>
+        <connection>https://github.com/mayanjun/pss.git</connection>
         <developerConnection>https://github.com/mayanjun</developerConnection>
     </scm>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/commons-beanutils/commons-beanutils -->
         <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
             <version>1.9.4</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>

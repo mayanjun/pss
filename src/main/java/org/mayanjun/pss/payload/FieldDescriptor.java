@@ -22,10 +22,11 @@ import java.util.Map;
 
 /**
  * Describe a field
+ * @since 2020-03-21
+ * @author mayanjun
  */
 public class FieldDescriptor implements Serializable {
 
-    // 字段的英文名称
     private String name;
 
     private String displayName;

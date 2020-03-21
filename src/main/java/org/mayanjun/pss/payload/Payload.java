@@ -24,6 +24,8 @@ import java.util.Set;
 
 /**
  * Represent  a payload
+ * @since 2020-03-21
+ * @author mayanjun
  */
 public class Payload {
 

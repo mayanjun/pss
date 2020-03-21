@@ -16,6 +16,11 @@
 
 package org.mayanjun.pss.payload;
 
+/**
+ * Unsigned field value
+ * @since 2020-03-21
+ * @author mayanjun
+ */
 public class UnsignedFieldValue extends FieldValue {
 
     public UnsignedFieldValue(FieldDescriptor fieldDescriptor, Object value) {

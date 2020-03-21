@@ -18,6 +18,8 @@ package org.mayanjun.pss;
 
 /**
  * Deserialization exception
+ * @since 2020-03-21
+ * @author mayanjun
  */
 public class DeserializeException extends Exception {
 

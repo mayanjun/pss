@@ -23,6 +23,8 @@ import java.nio.ByteBuffer;
 
 /**
  * Serialize/Deserialize object
+ * @since 2020-03-21
+ * @author mayanjun
  */
 interface TypeSerializer {
 

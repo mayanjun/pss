@@ -23,6 +23,8 @@ import java.util.List;
 
 /**
  * PayloadDescriptor representing description of an object
+ * @since 2020-03-21
+ * @author mayanjun
  */
 public class PayloadDescriptor implements Serializable {
 

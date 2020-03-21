@@ -17,7 +17,9 @@
 package org.mayanjun.pss.payload;
 
 /**
- * DataField
+ * Represent a FieldDescriptor and value
+ * @since 2020-03-21
+ * @author mayanjun
  */
 public class FieldValue {
 

@@ -28,6 +28,11 @@ import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.util.List;
 
+/**
+ * Payloads utils
+ * @since 2020-03-21
+ * @author mayanjun
+ */
 public class Payloads {
 
     private static final Logger LOG = LoggerFactory.getLogger(Payloads.class);

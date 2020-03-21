@@ -27,6 +27,8 @@ import java.util.Date;
 
 /**
  * Define the primary types in language C or C++ and handlers to serialize/deserialize the value.
+ * @since 2020-03-21
+ * @author mayanjun
  */
 public enum FieldType implements TypeSerializer {
 
