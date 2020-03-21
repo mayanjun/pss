@@ -42,8 +42,8 @@ public class Payloads {
 
     /**
      * 序列化一个Payload
-     * @param payloadDescriptor
-     * @param payload
+     * @param payloadDescriptor pd
+     * @param payload payload object
      * @return
      */
     public static byte[] serialize(PayloadDescriptor payloadDescriptor, Object payload) throws SerializeException {
@@ -79,9 +79,9 @@ public class Payloads {
 
     /**
      * 序列化Payload并写入输出流
-     * @param payloadDescriptor
-     * @param payload
-     * @param outputStream
+     * @param payloadDescriptor pd
+     * @param payload payload
+     * @param outputStream output stream
      * @throws SerializeException
      */
     public static void serialize(PayloadDescriptor payloadDescriptor, Object payload, OutputStream outputStream) throws SerializeException {

@@ -6,9 +6,9 @@
 
     <groupId>org.mayanjun</groupId>
     <artifactId>pss</artifactId>
-    <version>1.0-ALPHA</version>
+    <version>1.0.0-ALPHA</version>
 
-    <name>Payload Serialization System</name>
+    <name>pss</name>
     <description>Payload Serialization System</description>
     <url>https://github.com/mayanjun/pss</url>
 
@@ -128,7 +128,7 @@
                 <executions>
                     <execution>
                         <id>sign-artifacts</id>
-                        <phase>deploy</phase>
+                        <phase>verify</phase>
                         <goals>
                             <goal>sign</goal>
                         </goals>
