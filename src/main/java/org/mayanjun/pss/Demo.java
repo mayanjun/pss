@@ -32,11 +32,12 @@ public class Demo {
     }
 
     public static void test() throws Exception {
-        PayloadDescriptor d = new PayloadDescriptor(12, "TestBean", "Test Bean", "Test description");
+        PayloadDescriptor d = new PayloadDescriptor(12, "Foo", "Foo Bean", "This is a demo");
         d.addFieldDescriptor(new FieldDescriptor("age", FieldType.INT8));
         d.addFieldDescriptor(new FieldDescriptor("uage", FieldType.UINT8));
         d.addFieldDescriptor(new FieldDescriptor("ok", FieldType.BOOL));
         d.addFieldDescriptor(new FieldDescriptor("name", FieldType.STRING));
+        d.addFieldDescriptor(new FieldDescriptor("nullable", FieldType.STRING));
         d.addFieldDescriptor(new FieldDescriptor("height", FieldType.FLOAT));
         d.addFieldDescriptor(new FieldDescriptor("score", FieldType.DOUBLE));
         d.addFieldDescriptor(new FieldDescriptor("length", FieldType.INT64));

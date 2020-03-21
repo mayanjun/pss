@@ -16,10 +16,14 @@
 
 package org.mayanjun.pss.payload;
 
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Describe a field
  */
-public class FieldDescriptor {
+public class FieldDescriptor implements Serializable {
 
     // 字段的英文名称
     private String name;
@@ -29,6 +33,8 @@ public class FieldDescriptor {
     private String description;
 
     private FieldType type;
+
+    private Map<String, Object> attributes;
 
     public FieldDescriptor() {
     }
@@ -79,5 +85,37 @@ public class FieldDescriptor {
 
     public void setType(FieldType type) {
         this.type = type;
+    }
+
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(Map<String, Object> attributes) {
+        this.attributes = attributes;
+    }
+
+    public Object attribute(String name) {
+        if (this.attributes == null) return null;
+        return this.attributes.get(name);
+    }
+
+    public boolean removeAttribute(String name) {
+        if (this.attributes == null) return false;
+        return this.attributes.remove(name) != null;
+    }
+
+    public FieldDescriptor attribute(String name, Object value) {
+        if (this.attributes == null) {
+            synchronized (this) {
+                Map<String, Object> attrs = this.attributes;
+                if (attrs == null) {
+                    attrs = new HashMap<String, Object>();
+                    this.attributes = attrs;
+                }
+            }
+        }
+        this.attributes.put(name, value);
+        return this;
     }
 }
