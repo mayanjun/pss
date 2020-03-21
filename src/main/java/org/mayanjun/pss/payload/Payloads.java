@@ -19,6 +19,8 @@ package org.mayanjun.pss.payload;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.mayanjun.pss.DeserializeException;
 import org.mayanjun.pss.SerializeException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -27,6 +29,8 @@ import java.nio.ByteBuffer;
 import java.util.List;
 
 public class Payloads {
+
+    private static final Logger LOG = LoggerFactory.getLogger(Payloads.class);
 
     private Payloads() {
     }
@@ -43,6 +47,31 @@ public class Payloads {
         return out.toByteArray();
     }
 
+
+    private static void setNullBitFlag( byte nullFlagBytes[], int index) {
+        int size = index + 1;
+        int mod = size % 8;
+        int b0 = (size - mod) / 8;
+        int b1 = (mod == 0 ? 0 : 1);
+        int bytesLen = b0 + b1;
+        int byteIndex = bytesLen - 1;
+        int bitIndex = index % 8;
+        byte setByte = (byte) (0x01 << bitIndex);
+        nullFlagBytes[byteIndex] = (byte) (nullFlagBytes[byteIndex] | setByte);
+    }
+
+    private static boolean isNullFlagSet(byte nullFlagBytes[], int index) {
+        int size = index + 1;
+        int mod = size % 8;
+        int b0 = (size - mod) / 8;
+        int b1 = (mod == 0 ? 0 : 1);
+        int bytesLen = b0 + b1;
+        int byteIndex = bytesLen - 1;
+        int bitIndex = index % 8;
+        byte setByte = (byte) (0x01 << bitIndex);
+        return (nullFlagBytes[byteIndex] & setByte) == setByte;
+    }
+
     /**
      * 序列化Payload并写入输出流
      * @param payloadDescriptor
@@ -57,10 +86,28 @@ public class Payloads {
         try {
             // 写ID
             out.writeInt(payloadDescriptor.getId());
-            for (FieldDescriptor field : fields) {
-                Object value = PropertyUtils.getNestedProperty(payload, field.getName());
-                byte bytes[] = field.getType().serialize(value);
-                out.write(bytes, 0, bytes.length);
+
+            // 获取能表示null字段的字节数组
+            byte nullFlagBytes[] = payloadDescriptor.nullFlagBytes();
+
+            Object values[] = new Object[fields.size()];
+            for (int i = 0; i < fields.size(); i++) {
+                FieldDescriptor fd = fields.get(i);
+                Object value = PropertyUtils.getNestedProperty(payload, fd.getName());
+                byte bytes[] = fd.getType().serialize(value);
+                if (bytes == null) {
+                    setNullBitFlag(nullFlagBytes, i);
+                }
+                values[i] = bytes;
+            }
+
+            // write null field flags
+            out.write(nullFlagBytes, 0, nullFlagBytes.length);
+            for (int i = 0; i < values.length; i++) {
+                byte[] bytes = (byte[]) values[i];
+                if(bytes != null) {
+                    out.write(bytes, 0, bytes.length);
+                }
             }
             out.flush();
         } catch (SerializeException e) {
@@ -75,16 +122,30 @@ public class Payloads {
         List<FieldDescriptor> fields = payloadDescriptor.getFieldDescriptors();
         try {
             ByteBuffer buffer = ByteBuffer.wrap(payload);
+
             // 读ID
             int id = buffer.getInt();
             Payload pl = new Payload(id);
-            for (FieldDescriptor field : fields) {
-                FieldType type = field.getType();
-                Object value = type.deserialize(buffer);
-                if (type.isUnsigned()) {
-                    pl.addDataField(new UnsignedFieldValue(field, value));
+
+            // Read null flags
+            byte nullFlagBytes[] = payloadDescriptor.nullFlagBytes();
+            buffer.get(nullFlagBytes);
+
+            int fieldSize = fields.size();
+            for (int i = 0; i < fieldSize; i++) {
+                FieldDescriptor fd = fields.get(i);
+                FieldType type = fd.getType();
+
+                // judge is null
+                if (!isNullFlagSet(nullFlagBytes, i)) {
+                    Object value = type.deserialize(buffer);
+                    if (type.isUnsigned()) {
+                        pl.addDataField(new UnsignedFieldValue(fd, value));
+                    } else {
+                        pl.addDataField(new FieldValue(fd, value));
+                    }
                 } else {
-                    pl.addDataField(new FieldValue(field, value));
+                    pl.addDataField(new FieldValue(fd, null));
                 }
             }
             return pl;

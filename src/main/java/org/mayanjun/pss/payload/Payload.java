@@ -78,13 +78,17 @@ public class Payload {
                 sb.append(", value=").append(value);
             }
 
-            sb.append("(").append(f.getValue().getClass().getSimpleName()).append(")");
-
-            if (f instanceof UnsignedFieldValue) {
-                Object uv = ((UnsignedFieldValue) f).getUnsignedValue();
-                sb.append(f instanceof UnsignedFieldValue ? ", unsignedValue=" + uv : "")
-                        .append("(").append(uv.getClass().getSimpleName()).append(")");
+            if(value == null) {
+                sb.append("(null value)");
+            } else {
+                sb.append("(").append(f.getValue().getClass().getSimpleName()).append(")");
+                if (f instanceof UnsignedFieldValue) {
+                    Object uv = ((UnsignedFieldValue) f).getUnsignedValue();
+                    sb.append(f instanceof UnsignedFieldValue ? ", unsignedValue=" + uv : "")
+                            .append("(").append(uv.getClass().getSimpleName()).append(")");
+                }
             }
+
             sb.append("\n");
         }
         return sb.toString();

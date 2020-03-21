@@ -26,7 +26,7 @@ import java.util.List;
 public class PayloadDescriptor {
 
     /**
-     * 描述符ID
+     * Descriptor id or version
      */
     private int id;
 
@@ -43,6 +43,35 @@ public class PayloadDescriptor {
 
     public PayloadDescriptor(int id) {
         this.id = id;
+    }
+
+    public PayloadDescriptor(int id, String name, String displayName, String description) {
+        this(id, name, displayName, description, null);
+    }
+
+    public PayloadDescriptor(int id, String name, String displayName, String description, List<FieldDescriptor> fieldDescriptors) {
+        this.id = id;
+        this.name = name;
+        this.displayName = displayName;
+        this.description = description;
+        setFieldDescriptors(fieldDescriptors);
+    }
+
+    public int nullFlagSize() {
+        int size = this.fieldDescriptors.size();
+        int mod8 = size % 8;
+        int byteLen = (size - mod8) / 8 + (mod8 == 0 ? 0 : 1);
+        return byteLen;
+    }
+
+    public byte[] nullFlagBytes() {
+        byte bytes[] = new byte[nullFlagSize()];
+        if(bytes.length > 0) {
+            for (int i = 0; i < bytes.length; i++) {
+                bytes[i] = 0x00;
+            }
+        }
+        return bytes;
     }
 
     public int getId() {
@@ -77,9 +106,12 @@ public class PayloadDescriptor {
         this.description = description;
     }
 
-    public PayloadDescriptor addFieldDescriptor(FieldDescriptor fieldDescriptor) {
-        this.fieldDescriptors.add(fieldDescriptor);
-        return this;
+    public boolean addFieldDescriptor(FieldDescriptor fieldDescriptor) {
+        if(fieldDescriptor.isValid()) {
+            this.fieldDescriptors.add(fieldDescriptor);
+            return true;
+        }
+        return false;
     }
 
     public List<FieldDescriptor> getFieldDescriptors() {
@@ -87,6 +119,8 @@ public class PayloadDescriptor {
     }
 
     public void setFieldDescriptors(List<FieldDescriptor> fieldDescriptors) {
-        this.fieldDescriptors = fieldDescriptors;
+        if (fieldDescriptors != null) {
+            this.fieldDescriptors = fieldDescriptors;
+        }
     }
 }

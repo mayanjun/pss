@@ -40,6 +40,10 @@ public class FieldDescriptor {
         this.type = type;
     }
 
+    public boolean isValid() {
+        return this.name != null && type != null;
+    }
+
     public FieldDescriptor(String name, FieldType type) {
         this.name = name;
         this.type = type;

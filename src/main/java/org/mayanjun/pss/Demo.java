@@ -26,8 +26,13 @@ import java.util.Map;
 
 public class Demo {
 
+
     public static void main(String[] args) throws Exception {
-        PayloadDescriptor d = new PayloadDescriptor(12);
+        test();
+    }
+
+    public static void test() throws Exception {
+        PayloadDescriptor d = new PayloadDescriptor(12, "TestBean", "Test Bean", "Test description");
         d.addFieldDescriptor(new FieldDescriptor("age", FieldType.INT8));
         d.addFieldDescriptor(new FieldDescriptor("uage", FieldType.UINT8));
         d.addFieldDescriptor(new FieldDescriptor("ok", FieldType.BOOL));
@@ -43,11 +48,10 @@ public class Demo {
         d.addFieldDescriptor(new FieldDescriptor("bytes", FieldType.BYTES));
 
         String json = JSON.format(d);
-        System.out.println("PayloadDescriptor:\n");
-        System.out.println(json);
+        //System.out.println("PayloadDescriptor:\n");
+        //System.out.println(json);
 
         PayloadDescriptor pd = JSON.de(json, PayloadDescriptor.class);
-
 
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("age", 17);
@@ -61,12 +65,13 @@ public class Demo {
         data.put("test_uint16", Short.MAX_VALUE + 100);
         data.put("test_int32", Integer.MAX_VALUE);
         data.put("test_uint32", Integer.MAX_VALUE + 100);
-        byte bss [] =  "mayanjun马彦军".getBytes("utf-8");
+        byte bss [] =  "aa".getBytes("utf-8");
         data.put("bytes", bss);
         Date now = new Date();
         data.put("date", now);
 
         byte bs[] = se(pd, data);
+
         de(pd, bs);
     }
 

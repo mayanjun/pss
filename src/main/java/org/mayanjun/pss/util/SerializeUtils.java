@@ -28,21 +28,13 @@ public class SerializeUtils {
 
     private static final byte [] TRUE_BYTES = new byte []{1};
     private static final byte [] FALSE_BYTES = new byte []{0};
-    private static final byte [] ZERO_LENGTH_BYTES = new byte []{0, 0};
-
     public static final int MAX_FIELD_LENGTH = 0xFFFF - 2;
-
-    private static final byte [] ZERO_BYTES1 = new byte []{0};
-    private static final byte [] ZERO_BYTES2 = new byte []{0, 0};
-    private static final byte [] ZERO_BYTES4 = new byte []{0, 0, 0, 0};
-    private static final byte [] ZERO_BYTES8 = new byte []{0, 0, 0, 0, 0, 0, 0, 0};
-
 
     private SerializeUtils() {
     }
 
     public static byte[] int8ToBytes(Object value) throws SerializeException {
-        if (value == null) return ZERO_BYTES1;
+        if (value == null) return null;
         if (value instanceof Number) {
             return new byte[] {((Number) value).byteValue()};
         } else {
@@ -51,7 +43,7 @@ public class SerializeUtils {
     }
 
     public static byte[] int16ToBytes(Object value) throws SerializeException  {
-        if (value == null) return ZERO_BYTES2;
+        if (value == null) return null;
         if (value instanceof Number) {
             short s = ((Number) value).shortValue();
             return new byte[] {
@@ -64,7 +56,7 @@ public class SerializeUtils {
     }
 
     public static byte[] int32ToBytes(Object value) throws SerializeException  {
-        if (value == null) return ZERO_BYTES4;
+        if (value == null) return null;
         if (value instanceof Number) {
             int i = ((Number) value).intValue();
             return new byte[] {
@@ -79,7 +71,7 @@ public class SerializeUtils {
     }
 
     public static byte[] int64ToBytes(Object value) throws SerializeException  {
-        if (value == null) return ZERO_BYTES8;
+        if (value == null) return null;
         if (value instanceof Number) {
             long i = ((Number) value).longValue();
             return new byte[] {
@@ -98,7 +90,7 @@ public class SerializeUtils {
     }
 
     public static byte[] dateToBytes(Object value) throws SerializeException {
-        if (value == null) return ZERO_BYTES8;
+        if (value == null) return null;
         if (value instanceof Number) {
             return int64ToBytes(value);
         } else if (value instanceof Date) {
@@ -110,7 +102,7 @@ public class SerializeUtils {
 
 
     public static byte[] floatToBytes(Object value) throws SerializeException {
-        if (value == null) return ZERO_BYTES4;
+        if (value == null) return null;
 
         if (value instanceof Number) {
             float f = ((Number) value).floatValue();
@@ -121,7 +113,7 @@ public class SerializeUtils {
     }
 
     public static byte[] doubleToBytes(Object value) throws SerializeException {
-        if (value == null) return ZERO_BYTES8;
+        if (value == null) return null;
         if (value instanceof Number) {
             double f = ((Number) value).doubleValue();
             return int64ToBytes(Double.doubleToLongBits(f));
@@ -131,7 +123,7 @@ public class SerializeUtils {
     }
 
     public static byte[] boolToBytes(Object value) throws SerializeException {
-        if (value == null) return ZERO_BYTES1;
+        if (value == null) return null;
         if (value instanceof Boolean) {
             if (Boolean.TRUE.equals(value)) {
                 return TRUE_BYTES;
@@ -171,7 +163,7 @@ public class SerializeUtils {
      * @throws SerializeException
      */
     public static byte[] bytesToLengthBytes(Object value) throws SerializeException {
-        if (value == null) return toLengthBytes(null);
+        if (value == null) return null;
         if (value instanceof byte[]) {
             byte bs[] = (byte[]) value;
             if (bs.length == 0) return toLengthBytes(null);
@@ -188,9 +180,7 @@ public class SerializeUtils {
      * @throws SerializeException
      */
     private static byte [] toLengthBytes(byte [] bytes) throws SerializeException {
-
-        if (bytes == null) return ZERO_LENGTH_BYTES;
-
+        if (bytes == null) return null;
         int len = bytes.length;
         if (bytes.length > MAX_FIELD_LENGTH) len = MAX_FIELD_LENGTH;
 
