@@ -17,13 +17,14 @@
 package org.mayanjun.pss.payload;
 
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
  * PayloadDescriptor representing description of an object
  */
-public class PayloadDescriptor {
+public class PayloadDescriptor implements Serializable {
 
     /**
      * Descriptor id or version
